@@ -8,26 +8,26 @@ namespace Orders.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OrdersController : Controller
+    public class CategoriesController : ControllerBase
     {
-        private readonly OrdersService _orderService;
+        private readonly CategoriesService _categoriesService;
 
-        public OrdersController(OrdersService orderService)
+        public CategoriesController(CategoriesService categoriesService)
         {
-            _orderService = orderService;
+            _categoriesService = categoriesService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Order>>> GetOrders()
+        public async Task<ActionResult<List<Category>>> GetCategories()
         {
-            var data = _orderService.Get();
+            var data = _categoriesService.Get();
             return Ok(data);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(string id)
+        public async Task<ActionResult<Category>> GetCategory(string id)
         {
-            var data = _orderService.Get(id);
+            var data = _categoriesService.Get(id);
             if (data == null)
             {
                 return NotFound();

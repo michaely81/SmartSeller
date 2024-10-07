@@ -15,8 +15,12 @@ namespace Orders.Api.Models
         [BsonElement("FirstName")]
         public string FirstName { get; set; }
 
+
         [BsonElement("LastName")]
         public string LastName { get; set; }
+
+        [BsonElement("Address")]
+        public string Address { get; set; }
 
         [BsonElement("Email")]
         public string Email { get; set; }

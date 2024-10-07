@@ -8,26 +8,26 @@ namespace Orders.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OrdersController : Controller
+    public class ProductsController : ControllerBase
     {
-        private readonly OrdersService _orderService;
+        private readonly ProductsService _productService;
 
-        public OrdersController(OrdersService orderService)
+        public ProductsController(ProductsService productService)
         {
-            _orderService = orderService;
+            _productService = productService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Order>>> GetOrders()
+        public async Task<ActionResult<List<Product>>> GetProducts()
         {
-            var data = _orderService.Get();
+            var data =  _productService.Get();
             return Ok(data);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(string id)
+        public async Task<ActionResult<Product>> GetProduct(string id)
         {
-            var data = _orderService.Get(id);
+            var data =  _productService.Get(id);
             if (data == null)
             {
                 return NotFound();

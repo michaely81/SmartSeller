@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBranch, addItem, clearOrder } from '../app/store';
 import { useNavigate } from 'react-router-dom';
@@ -8,9 +8,10 @@ const ShoppingList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { branch, items } = useSelector(state => state.order);
-  const [newItem, setNewItem] = useState({ name: '', quantity: 1 });
+  const [newItem, setNewItem] = useState({ name: '', quantity: 1, firstName: '', lastName: '', address: '', email: '' });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [formError, setFormError] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,17 +28,31 @@ const ShoppingList = () => {
     fetchData();
   }, []);
 
-  
-
   const handleBranchChange = (e) => {
     dispatch(setBranch(e.target.value));
   };
 
+  // Email validation regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const handleAddItem = () => {
-    if (newItem.name) {
-      dispatch(addItem(newItem));
-      setNewItem({ name: '', quantity: 1 });
+    const { firstName, lastName, address, email, name, quantity } = newItem;
+
+    // Check if required fields are filled
+    if (!firstName || !lastName || !address || !email || !name || quantity <= 0) {
+      setFormError('כל השדות נדרשים והכמות חייבת להיות גדולה מ-0');
+      return;
     }
+
+    // Check if email is valid
+    if (!emailRegex.test(email)) {
+      setFormError('אנא הזן כתובת מייל תקינה');
+      return;
+    }
+
+    setFormError(''); // Clear error if validation passes
+    dispatch(addItem(newItem));
+    setNewItem({ name: '', quantity: 1, firstName: '', lastName: '', address: '', email: '' });
   };
 
   const handleSave = () => {
@@ -71,6 +86,30 @@ const ShoppingList = () => {
       <h4>הוסף מוצר</h4>
       <input
         type="text"
+        placeholder="שם פרטי"
+        value={newItem.firstName}
+        onChange={(e) => setNewItem({ ...newItem, firstName: e.target.value })}
+      />
+      <input
+        type="text"
+        placeholder="שם משפחה"
+        value={newItem.lastName}
+        onChange={(e) => setNewItem({ ...newItem, lastName: e.target.value })}
+      />
+      <input
+        type="text"
+        placeholder="כתובת"
+        value={newItem.address}
+        onChange={(e) => setNewItem({ ...newItem, address: e.target.value })}
+      />
+      <input
+        type="text"
+        placeholder="מייל"
+        value={newItem.email}
+        onChange={(e) => setNewItem({ ...newItem, email: e.target.value })}
+      />
+      <input
+        type="text"
         placeholder="שם מוצר"
         value={newItem.name}
         onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
@@ -81,6 +120,8 @@ const ShoppingList = () => {
         onChange={(e) => setNewItem({ ...newItem, quantity: Number(e.target.value) })}
       />
       <button onClick={handleAddItem}>הוסף מוצר</button>
+
+      {formError && <p style={{ color: 'red' }}>{formError}</p>} {/* Display error if fields are missing or invalid */}
 
       <div>
         <button onClick={handleSave}>שמור והמשך</button>
