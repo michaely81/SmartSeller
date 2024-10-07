@@ -24,7 +24,7 @@ const ShoppingList = () => {
         setLoading(false);
       }
     };
-    
+
 
     fetchData();
   }, []);
@@ -80,7 +80,7 @@ const ShoppingList = () => {
       <h3>מוצרים:</h3>
       <ul>
         {items.length === 0 ? <li>אין מוצרים</li> : items.map((item, index) => (
-          <li key={index}>{item.name} - כמות: {item.quantity}</li>
+          <li key={index}>שם פרטי : {item.firstName}, שם משפחה : {item.lastName}, כתובת : {item.address}, מייל: {item.email}, שם המוצר:  {item.name} - כמות: {item.quantity}</li>
         ))}
       </ul>
 

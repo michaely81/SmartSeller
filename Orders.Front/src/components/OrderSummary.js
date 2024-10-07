@@ -28,7 +28,7 @@ const OrderSummary = () => {
           <h3>פריטים בהזמנה:</h3>
           <ul>
             {items.map((item, index) => (
-              <li key={index}>{item.name} - כמות: {item.quantity}</li>
+              <li key={index}>שם פרטי : {item.firstName}, שם משפחה : {item.lastName}, כתובת : {item.address}, מייל: {item.email}, שם המוצר:  {item.name} - כמות: {item.quantity}</li>
             ))}
           </ul>
           <div>
