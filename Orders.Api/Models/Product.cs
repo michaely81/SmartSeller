@@ -12,8 +12,8 @@ namespace Orders.Api.Models
         [BsonElement("ProductName")]
         public string ProductName { get; set; }
 
-        [BsonElement("CategoryId")]
-        public int CategoryId { get; set; }
+        [BsonElement("CategoryType")]
+        public int CategoryType { get; set; }
 
     }
 }

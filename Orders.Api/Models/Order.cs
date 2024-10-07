@@ -24,8 +24,5 @@ namespace Orders.Api.Models
         [BsonElement("Quanitity")]
         public int Quanitity { get; set; }
 
-        [BsonElement("ProductId")]
-        public int ProductId { get; set; }
-
     }
 }
