@@ -34,5 +34,38 @@ namespace Orders.Api.Controllers
             }
             return Ok(data);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<Order>> Create(Order order)
+        {
+            order = _orderService.Create(order);
+
+            return Ok(order);
+        }
+
+        [HttpPut("{id:length(24)}")]
+        public async Task<IActionResult> Update(string id, Order updatedOrder)
+        {
+            Order order =  _orderService.Get(id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            updatedOrder.Id = order.Id;
+
+            _orderService.Update(id, updatedOrder);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id:length(24)}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+             _orderService.Delete(id);
+
+            return NoContent();
+        }
     }
 }
