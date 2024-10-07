@@ -24,6 +24,7 @@ const ShoppingList = () => {
         setLoading(false);
       }
     };
+    
 
     fetchData();
   }, []);
