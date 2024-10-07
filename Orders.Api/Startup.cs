@@ -33,7 +33,10 @@ namespace Orders.Api
 
             services.AddSingleton<IOrdersDatabaseSettings>(sp => sp.GetRequiredService<IOptions<OrdersDatabaseSettings>>().Value);
 
+            services.AddSingleton<CategoriesService>();
+            services.AddSingleton<ProductsService>();
             services.AddSingleton<OrdersService>();
+            
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

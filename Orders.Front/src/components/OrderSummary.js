@@ -24,7 +24,6 @@ const OrderSummary = () => {
         <p>ההזמנה נשלחה בהצלחה!</p>
       ) : (
         <>
-          <p>חנות: {branch}</p>
           <h3>פריטים בהזמנה:</h3>
           <ul>
             {items.map((item, index) => (
