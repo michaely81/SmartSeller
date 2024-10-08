@@ -28,5 +28,8 @@ namespace Orders.Api.Models
         [BsonElement("Quanitity")]
         public int Quanitity { get; set; }
 
+        [BsonElement("CategoryType")]
+        public int CategoryType { get; set; }
+
     }
 }

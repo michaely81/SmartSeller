@@ -3,19 +3,19 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 const orderSlice = createSlice({
   name: 'order',
   initialState: {
-    branch: '',
+    category: '',
     items: [],
     orderSubmitted: false
   },
   reducers: {
-    setBranch: (state, action) => {
-      state.branch = action.payload;
+    setCategory: (state, action) => {
+      state.category = action.payload;
     },
     addItem: (state, action) => {
       state.items.push(action.payload);
     },
     clearOrder: (state) => {
-      state.branch = '';
+      state.category = '';
       state.items = [];
       state.orderSubmitted = false;
     },
@@ -25,7 +25,7 @@ const orderSlice = createSlice({
   }
 });
 
-export const { setBranch, addItem, clearOrder, submitOrder } = orderSlice.actions;
+export const { setCategory, addItem, clearOrder, submitOrder } = orderSlice.actions;
 
 const store = configureStore({
   reducer: {

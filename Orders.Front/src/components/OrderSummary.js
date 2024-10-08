@@ -6,11 +6,40 @@ import { useNavigate } from 'react-router-dom';
 const OrderSummary = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { branch, items, orderSubmitted } = useSelector(state => state.order);
+  const { category, items, orderSubmitted } = useSelector(state => state.order);
 
-  const handleSendOrder = () => {
-    dispatch(submitOrder());
-    console.log("Order submitted:", { branch, items });
+  const handleSendOrder = async () => {
+    // Prepare order data
+    const orderData = {
+      id: "12345", 
+      orderName: "Sample Order", 
+      firstName: items[0]?.firstName, 
+      lastName: items[0]?.lastName,
+      address: items[0]?.address,
+      email: items[0]?.email,
+      quanitity: items.reduce((total, item) => total + item.quantity, 0), 
+      categoryType: category 
+    };
+
+    try {
+      // Send order data to API
+      const response = await fetch('https://localhost:44323/api/Orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (response.ok) {
+        dispatch(submitOrder()); // Dispatch success action
+        console.log("Order submitted successfully:", orderData);
+      } else {
+        console.error("Failed to submit order:", response.status);
+      }
+    } catch (error) {
+      console.error("Error submitting order:", error);
+    }
   };
 
   const handleGoBack = () => {

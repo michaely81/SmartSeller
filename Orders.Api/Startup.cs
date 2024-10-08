@@ -34,7 +34,6 @@ namespace Orders.Api
             services.AddSingleton<IOrdersDatabaseSettings>(sp => sp.GetRequiredService<IOptions<OrdersDatabaseSettings>>().Value);
 
             services.AddSingleton<CategoriesService>();
-            services.AddSingleton<ProductsService>();
             services.AddSingleton<OrdersService>();
             
 
@@ -45,14 +44,11 @@ namespace Orders.Api
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                
-                
             }
 
             app.UseSwagger();

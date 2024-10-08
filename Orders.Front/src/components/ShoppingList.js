@@ -1,23 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBranch, addItem, clearOrder } from '../app/store';
+import { setCategory, addItem, clearOrder } from '../app/store';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const ShoppingList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { branch, items } = useSelector(state => state.order);
+  const { category, items } = useSelector(state => state.order);
   const [newItem, setNewItem] = useState({ name: '', quantity: 1, firstName: '', lastName: '', address: '', email: '' });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [formError, setFormError] = useState('');
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await axios.get('https://api.example.com/items'); 
-        // setItems(response.data); 
+        const data = {
+          "Category": [
+            {
+              "Id": "427779e2-62f3-4877-9113-9958137653cd",
+              "CategoryName": "מוצרי חלב",
+              "CategoryType": 1
+            },
+            {
+              "Id": "127779e2-62f3-4877-9113-9958137653cd",
+              "CategoryName": "בשר",
+              "CategoryType": 2
+            },
+            {
+              "Id": "123339e2-62f3-4877-9113-9958137653cd",
+              "CategoryName": "ירקות ופירות",
+              "CategoryType": 3
+            }
+          ]
+        };
+
+        setCategories(data.Category);
       } catch (error) {
         setError(error);
       } finally {
@@ -25,33 +45,32 @@ const ShoppingList = () => {
       }
     };
 
-
     fetchData();
   }, []);
 
-  const handleBranchChange = (e) => {
-    dispatch(setBranch(e.target.value));
+  const handleCategoryChange = (e) => {
+    dispatch(setCategory(e.target.value));
+  };
+  const handleProductChange = (e) => {
+    dispatch(setCategory(e.target.value));
   };
 
-  // Email validation regex
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleAddItem = () => {
     const { firstName, lastName, address, email, name, quantity } = newItem;
 
-    // Check if required fields are filled
     if (!firstName || !lastName || !address || !email || !name || quantity <= 0) {
       setFormError('כל השדות נדרשים והכמות חייבת להיות גדולה מ-0');
       return;
     }
 
-    // Check if email is valid
     if (!emailRegex.test(email)) {
       setFormError('אנא הזן כתובת מייל תקינה');
       return;
     }
 
-    setFormError(''); // Clear error if validation passes
+    setFormError('');
     dispatch(addItem(newItem));
     setNewItem({ name: '', quantity: 1, firstName: '', lastName: '', address: '', email: '' });
   };
@@ -70,17 +89,21 @@ const ShoppingList = () => {
   return (
     <div>
       <h2>רשימת קניות</h2>
-      <label htmlFor="branch">בחר קטגוריה:</label>
-      <select id="branch" value={branch} onChange={handleBranchChange}>
-        <option value="store1">חלב וגבינות</option>
-        <option value="store2">בשר</option>
-        <option value="store3">ירקות ופירות</option>
+      <label htmlFor="category">בחר קטגוריה:</label>
+      <select id="category" value={category} onChange={handleCategoryChange}>
+        {categories.map((category) => (
+          <option key={category.Id} value={category.CategoryType}>
+            {category.CategoryName}
+          </option>
+        ))}
       </select>
 
       <h3>מוצרים:</h3>
       <ul>
         {items.length === 0 ? <li>אין מוצרים</li> : items.map((item, index) => (
-          <li key={index}>שם פרטי : {item.firstName}, שם משפחה : {item.lastName}, כתובת : {item.address}, מייל: {item.email}, שם המוצר:  {item.name} - כמות: {item.quantity}</li>
+          <li key={index}>
+            שם פרטי : {item.firstName}, שם משפחה : {item.lastName}, כתובת : {item.address}, מייל: {item.email}, שם המוצר:  {item.name} - כמות: {item.quantity}
+          </li>
         ))}
       </ul>
 

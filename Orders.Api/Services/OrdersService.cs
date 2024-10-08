@@ -19,7 +19,7 @@ namespace Orders.Api.Services
 
         public List<Order> Get() => _orders.Find(Order => true).ToList();
 
-        public Order Get(string id) => _orders.Find(Order => Order.Id == id).FirstOrDefault();
+        //public Order Get(string id) => _orders.Find(Order => Order.Id == id).FirstOrDefault();
 
         public Order Create(Order Order)
         {
@@ -27,10 +27,10 @@ namespace Orders.Api.Services
             return Order;
         }
 
-        public void Update(string id, Order updatedOrder) => _orders.ReplaceOne(Order => Order.Id == id, updatedOrder);
+        //public void Update(string id, Order updatedOrder) => _orders.ReplaceOne(Order => Order.Id == id, updatedOrder);
 
-        public void Delete(Order OrderForDeletion) => _orders.DeleteOne(Order => Order.Id == OrderForDeletion.Id);
+        //public void Delete(Order OrderForDeletion) => _orders.DeleteOne(Order => Order.Id == OrderForDeletion.Id);
 
-        public void Delete(string id) => _orders.DeleteOne(Order => Order.Id == id);
+        //public void Delete(string id) => _orders.DeleteOne(Order => Order.Id == id);
     }
 }

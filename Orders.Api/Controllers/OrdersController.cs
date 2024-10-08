@@ -24,16 +24,16 @@ namespace Orders.Api.Controllers
             return Ok(data);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(string id)
-        {
-            var data = _orderService.Get(id);
-            if (data == null)
-            {
-                return NotFound();
-            }
-            return Ok(data);
-        }
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Order>> GetOrder(string id)
+        //{
+        //    var data = _orderService.Get(id);
+        //    if (data == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(data);
+        //}
 
         [HttpPost]
         public async Task<ActionResult<Order>> Create(Order order)
@@ -43,29 +43,29 @@ namespace Orders.Api.Controllers
             return Ok(order);
         }
 
-        [HttpPut("{id:length(24)}")]
-        public async Task<IActionResult> Update(string id, Order updatedOrder)
-        {
-            Order order =  _orderService.Get(id);
+        //[HttpPut("{id:length(24)}")]
+        //public async Task<IActionResult> Update(string id, Order updatedOrder)
+        //{
+        //    Order order =  _orderService.Get(id);
 
-            if (order == null)
-            {
-                return NotFound();
-            }
+        //    if (order == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            updatedOrder.Id = order.Id;
+        //    updatedOrder.Id = order.Id;
 
-            _orderService.Update(id, updatedOrder);
+        //    _orderService.Update(id, updatedOrder);
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        [HttpDelete("{id:length(24)}")]
-        public async Task<IActionResult> Delete(string id)
-        {
-             _orderService.Delete(id);
+        //[HttpDelete("{id:length(24)}")]
+        //public async Task<IActionResult> Delete(string id)
+        //{
+        //     _orderService.Delete(id);
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
     }
 }
